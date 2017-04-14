@@ -3,11 +3,19 @@ class UsersController < ApplicationController
     if !logged_in?
       erb :'users/create_users'
     else
-      redirect '/homepage'
+      redirect 'users/homepage'
     end
   end
 
   post '/signup' do
+    if params[:username].empty? || params[:email].empty? || params[:password].empty?
+      redirect to '/signup'
+    else
+      @user = User.create(params)
+      @user.save
+      session[:user_id] = @user.id
+      redirect to 'users/homepage'
+    end
   end
 
   get '/login' do
