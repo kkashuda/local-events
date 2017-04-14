@@ -1,16 +1,18 @@
+
 <!DOCTYPE html>
 <html>
+<head><link href="<%= url('/style-sheet.css') %>" rel="stylesheet"> </head>
 <body>
 <center>
   <h1>Welcome!</h1>
 
   <div>
-    <a href="/">Home</a>
+    <a href="/">home</a> <span class="bar"> | </span>
+
     <% if !logged_in? %>
-      <a href="/login">Log In</a>
-      <a href="/signup">Sign Up</a>
+     <a href="/login">login</a> <span class="bar"> | </span> <a href="/signup">signup</a>
     <% else %>
-      <a href="/logout">Log Out</a>
+      <a href="/logout">logout</a>
     <% end %>
   </div>
 </center>

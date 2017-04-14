@@ -1,0 +1,18 @@
+a:link {
+  text-decoration: none;
+  font-family: "Courier New", Courier, monospace
+}
+
+h1 {
+  font-weight: lighter;
+  font-family: "Courier New", Courier, monospace
+}
+
+body {
+  background-color: rgb(245, 245, 245);
+}
+
+.bar {
+  font-size: 18px;
+  font-family: "Courier New", Courier, monospace
+}
