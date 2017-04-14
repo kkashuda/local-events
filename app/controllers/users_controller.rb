@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       @user = User.create(params)
       @user.save
       session[:user_id] = @user.id
-      redirect to 'users/homepage'
+      redirect to '/'
     end
   end
 
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
   end
 
-  post 'login' do
+  post '/login' do
     if !params[:username].empty? && !params[:password].empty?
       user = User.find(params[:username])
     end
@@ -39,6 +39,9 @@ class UsersController < ApplicationController
     end
   end
 
-
+  get '/logout' do
+    session.clear
+    redirect '/'
+  end
 
 end
