@@ -3,10 +3,11 @@ a:link {
   font-family: "Courier New", Courier, monospace
 }
 
-h1 {
+h1, h2, h3, h4 {
   font-weight: lighter;
   font-family: "Courier New", Courier, monospace
 }
+
 
 body {
   background-color: rgb(245, 245, 245);
@@ -15,4 +16,11 @@ body {
 .bar {
   font-size: 18px;
   font-family: "Courier New", Courier, monospace
+}
+
+.form {
+  padding-bottom: 20px;
+  border-style: solid;
+  border-width: thin;
+  width: 200px;
 }

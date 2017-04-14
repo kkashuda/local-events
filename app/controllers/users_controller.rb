@@ -1,21 +1,21 @@
 class UsersController < ApplicationController
-  get '/login' do
-    if !logged_in?
-      erb :'/users/login'
-    else
-      redirect '/homepage'
-    end
-  end
-
   get '/signup' do
     if !logged_in?
-      erb :create_user
+      erb :'users/create_users'
     else
       redirect '/homepage'
     end
   end
 
   post '/signup' do
+  end
+
+  get '/login' do
+    if !session[:user_id]
+      erb :'/users/login'
+    else
+      redirect '/homepage'
+    end
   end
 
   post 'login' do
@@ -29,6 +29,7 @@ class UsersController < ApplicationController
     else
       redirect '/signup'
     end
+  end
 
 
 
