@@ -12,8 +12,24 @@ class UsersController < ApplicationController
       erb :create_user
     else
       redirect '/homepage'
-    end 
+    end
   end
+
+  post '/signup' do
+  end
+
+  post 'login' do
+    if !params[:username].empty? && !params[:password].empty?
+      user = User.find(params[:username])
+    end
+
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect '/homepage'
+    else
+      redirect '/signup'
+    end
+
 
 
 end
