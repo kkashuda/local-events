@@ -24,3 +24,9 @@ body {
   border-width: thin;
   width: 200px;
 }
+
+img {
+  padding-top: 50px; 
+  width: 700px;
+  height: 400px;
+}
