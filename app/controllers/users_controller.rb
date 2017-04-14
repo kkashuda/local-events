@@ -7,6 +7,13 @@ class UsersController < ApplicationController
     end
   end
 
-  
+  get '/signup' do
+    if !logged_in?
+      erb :create_user
+    else
+      redirect '/homepage'
+    end 
+  end
+
 
 end
