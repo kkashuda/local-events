@@ -28,7 +28,7 @@ class UsersController < ApplicationController
 
   post '/login' do
     if !params[:username].empty? && !params[:password].empty?
-      user = User.find(params[:username])
+      user = User.find_by(username: params[:username])
     end
 
     if user && user.authenticate(params[:password])
