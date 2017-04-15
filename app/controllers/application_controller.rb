@@ -17,9 +17,15 @@ class ApplicationController < Sinatra::Base
     erb :'users/homepage'
   end
 
+  get '/create_post' do 
+    erb :'posts/create_post'
+  end 
+
   get "/posts/create_post" do 
     erb :'posts/create_post'
   end 
+
+
 
   helpers do
     def logged_in?
