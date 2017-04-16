@@ -2,7 +2,15 @@
 <center><h3>Welcome, <%=current_user.username%></h3></center>
 <br></br>
 <center> 
-	<a href="../posts/create_post">[create post]</a>
+	<a href="../posts/create_post">[create post]</a> <br> </br>
+	<br></br>
 
-	
+	<% @posts.each do |post| %>
+		<strong> <%= post.state %> </strong> <br></br>
+		<%= post.content %> 
+		<br></br>
+		--------------------
+		<br> </br>
+	<%end %>
+
 </center> 

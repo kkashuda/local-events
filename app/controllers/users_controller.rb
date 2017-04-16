@@ -39,6 +39,11 @@ class UsersController < ApplicationController
     end
   end
 
+  get '/users/homepage' do 
+    @posts = Post.all 
+    erb :'/users/homepage'
+  end 
+
   get '/logout' do
     session.clear
     redirect '/'
