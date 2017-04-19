@@ -1,6 +1,7 @@
 require 'pry'
+require 'rack-flash'
 class PostsController < ApplicationController
-
+	 use Rack::Flash
 	get '/posts' do
 		if logged_in?
 			@posts = Post.all
@@ -21,12 +22,19 @@ class PostsController < ApplicationController
 
 	post '/posts' do
 		if params[:content].empty?
+			flash[:message] = "Oops, you left the text box empty!"
 			redirect '/posts/create_post'
 		else
 			@user = User.find(session[:user_id])
 			@post = Post.create(:content => params[:content], :state=> params[:state], :user_id => @user.id)
+			flash[:message] = "Your post has been successfully created!"
 			redirect '/users/homepage'
 		end
+	end
+
+	get '/users/homepage' do
+		@posts = Post.all
+		erb :'/users/homepage'
 	end
 
 	get '/edit_post' do
@@ -58,11 +66,13 @@ class PostsController < ApplicationController
 
 	patch '/posts/:id' do
      if params[:content].empty?
+			 flash[:message] = "Oops, you left the text box empty!"
        redirect to "/posts/#{params[:id]}/edit"
      else
        @post = Post.find_by_id(params[:id])
        @post.content = params[:content]
        @post.save
+			 flash[:message] = "Your post has been updated!"
        redirect to "/posts/#{@post.id}"
      end
    end
@@ -78,8 +88,10 @@ class PostsController < ApplicationController
 			 @post = Post.find_by_id(params[:id])
 			 if @post.user_id == session[:user_id].to_s
 				@post.delete
+				flash[:message] = "Your post has been deleted!"
 				redirect '/posts'
 			 else
+				 flash[:message] = "Please log in"
 				 redirect '/login'
 			 end
 		 end

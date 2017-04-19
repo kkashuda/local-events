@@ -46,7 +46,6 @@ class UsersController < ApplicationController
 
   get '/homepage' do
     if logged_in?
-      flash[:message] = "Welcome back!"
       @posts = Post.all
       erb :'/users/homepage'
     else
