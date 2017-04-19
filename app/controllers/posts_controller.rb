@@ -2,7 +2,6 @@ require 'pry'
 class PostsController < ApplicationController
 
 	get '/posts' do
-		binding.pry
 		if logged_in?
 			@posts = Post.all
 			erb :'users/homepage'
@@ -78,7 +77,7 @@ class PostsController < ApplicationController
 		 if session[:user_id]
 			 @post = Post.find_by_id(params[:id])
 			 if @post.user_id == session[:user_id].to_s
-				 @post.delete
+				@post.delete
 				redirect '/posts'
 			 else
 				 redirect '/login'
