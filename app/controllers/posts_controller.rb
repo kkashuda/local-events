@@ -67,4 +67,17 @@ class PostsController < ApplicationController
      end
    end
 
+	 delete '/posts/:id/delete' do
+		 @post = Post.find_by_id(params[:id])
+		 if session[:user_id]
+			 @post = Post.find_by_id(params[:id])
+			 if @post.user_id == session[:user_id]
+				 @post.delete
+				 redirect '/posts'
+			 else
+				 redirect '/login'
+			 end
+		 end
+	 end 
+
 end
