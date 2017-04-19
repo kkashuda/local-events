@@ -1,3 +1,4 @@
+require 'pry'
 class PostsController < ApplicationController
 
 	get '/posts' do
@@ -10,11 +11,11 @@ class PostsController < ApplicationController
 	end
 
 	 get '/create_post' do
-    erb :'posts/create_post'
-  end
-
-  get "/posts/create_post" do
-    erb :'posts/create_post'
+		if logged_in?
+    	erb :'posts/create_post'
+		else
+			redirect '/login'
+		end
   end
 
 
@@ -28,6 +29,12 @@ class PostsController < ApplicationController
 		end
 	end
 
-	patch '/posts/edit' do 
-	end
+	get '/posts/:id' do
+    if session[:user_id]
+      @tpost = Post.find_by_id(params[:id])
+      erb :'posts/show'
+    else
+      redirect to '/login'
+    end
+  end
 end
