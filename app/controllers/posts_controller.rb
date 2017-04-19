@@ -1,7 +1,9 @@
 require 'pry'
 require 'rack-flash'
+
 class PostsController < ApplicationController
-	 use Rack::Flash
+	use Rack::Flash
+
 	get '/posts' do
 		if logged_in?
 			@posts = Post.all

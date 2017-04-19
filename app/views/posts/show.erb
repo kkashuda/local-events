@@ -1,15 +1,13 @@
-
-
 <center>
   <br></br>
   <% @posts.each do |post| %>
 		<div id="posts">
 			<strong> location: <%= post.state %> </strong> <br></br>
-			   <%= post.content %>
-        <br></br>
-        <a href="/posts/<%=post.id%>/edit">edit</a>
-        <a href="/posts/<%=post.id%>/delete">delete</a>
+			<%= post.content %>
+      <br></br>
+      <a href="/posts/<%=post.id%>/edit">edit</a> <span class="bar"> | </span>
+      <a href="/posts/<%=post.id%>/delete">delete</a>
     </div>
     <br></br>
-    <%end%>
+  <%end%>
 </center>

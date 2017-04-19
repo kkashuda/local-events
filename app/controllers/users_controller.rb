@@ -1,6 +1,8 @@
 require 'rack-flash'
+
 class UsersController < ApplicationController
   use Rack::Flash
+
   get '/signup' do
     if !logged_in?
       erb :'users/create_users'
