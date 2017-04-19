@@ -3,6 +3,12 @@ a:link {
   font-family: "Courier New", Courier, monospace
 }
 
+
+.posts {
+  font-family: "Courier New", Courier, monospace
+
+}
+
 h1, h2, h3, h4 {
   font-weight: lighter;
   font-family: "Courier New", Courier, monospace
@@ -29,4 +35,13 @@ img {
   padding-top: 50px;
   width: 700px;
   height: 400px;
+}
+
+#posts {
+  background-color: white;
+  width: 400px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: dashed black;
+  border-width: thin;
 }

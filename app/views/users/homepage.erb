@@ -1,12 +1,17 @@
 <br></br>
-<center><h3>@<%=current_user.username%></h3></center>
+
+<center>
+	<h3>@<%=current_user.username%></h3>
+</center>
+
 <br></br>
 <center>
 	<% @posts.each do |post| %>
-		<strong> location: <%= post.state %> </strong> <br></br>
-		<%= post.content %>
-		<br></br>
-		--------------------
+		<div id="posts">
+			<strong> location: <%= post.state %> </strong> <br></br>
+			<%= post.content %>
+		</div>
+
 		<br> </br>
 	<%end %>
 

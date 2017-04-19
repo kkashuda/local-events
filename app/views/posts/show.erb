@@ -1,6 +1,7 @@
 <center>
   <br></br>
   <% @posts.each do |post| %>
+  <p>location: <%= post.state %> </p> 
   <p> <%= post.content %> </p>
   <a href="/posts/<%=post.id%>/edit">edit</a>
   <br></br>
