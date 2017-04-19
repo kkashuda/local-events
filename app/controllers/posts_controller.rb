@@ -29,12 +29,42 @@ class PostsController < ApplicationController
 		end
 	end
 
-	get '/posts/:id' do
+	get '/edit_post' do
     if session[:user_id]
-      @tpost = Post.find_by_id(params[:id])
+      @posts = User.find(session[:user_id]).posts
       erb :'posts/show'
     else
       redirect to '/login'
     end
   end
+
+	get '/posts/:id/edit' do
+		if session[:user_id]
+			@post = Post.all.find_by_id(params[:id])
+			erb :'posts/edit'
+		else
+			redirect to '/login'
+		end
+	end
+
+	get '/posts/:id' do
+		if session[:user_id]
+	      @posts = User.find(session[:user_id]).posts
+	      erb :'/posts/show'
+	    else
+	      redirect to '/login'
+	    end
+	  end
+
+	patch '/posts/:id' do
+     if params[:content].empty?
+       redirect to "/posts/#{params[:id]}/edit"
+     else
+       @post = Post.find_by_id(params[:id])
+       @post.content = params[:content]
+       @post.save
+       redirect to "/posts/#{@post.id}"
+     end
+   end
+
 end

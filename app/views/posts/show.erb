@@ -1,0 +1,8 @@
+<center>
+  <br></br>
+  <% @posts.each do |post| %>
+  <p> <%= post.content %> </p>
+  <a href="/posts/<%=post.id%>/edit">edit</a>
+  <br></br>
+  <%end%>
+</center>
