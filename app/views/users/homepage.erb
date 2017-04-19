@@ -1,8 +1,11 @@
 
-
 <br></br>
 
 <center>
+	<% if flash.has?(:message) %>
+	  <%= flash[:message] %>
+	<% end %>
+	
 	<h4>logged in as: @<%=current_user.username%></h4>
 	<h3>local events:</h3>
 </center>
