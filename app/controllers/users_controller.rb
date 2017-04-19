@@ -14,6 +14,7 @@ class UsersController < ApplicationController
       @user = User.create(params)
       @user.save
       session[:user_id] = @user.id
+      flash[:message] = "Welcome, #{@user.username}!"
       redirect to '/'
     end
   end
@@ -22,7 +23,8 @@ class UsersController < ApplicationController
     if !session[:user_id]
       erb :'/users/login'
     else
-      redirect '/homepage'
+      #binding.pry
+      erb :'/homepage'
     end
   end
 
@@ -39,10 +41,14 @@ class UsersController < ApplicationController
     end
   end
 
-  get '/users/homepage' do 
-    @posts = Post.all 
-    erb :'/users/homepage'
-  end 
+  get '/homepage' do
+    if logged_in?
+      @posts = Post.all
+      erb :'/users/homepage'
+    else
+      redirect '/login'
+    end
+  end
 
   get '/logout' do
     session.clear
