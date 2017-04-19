@@ -1,30 +1,33 @@
-class PostsController < ApplicationController 
-	
-	get '/posts' do 
+class PostsController < ApplicationController
+
+	get '/posts' do
 		if logged_in?
-			@posts = Post.all 
+			@posts = Post.all
 			erb :'users/homepage'
-		else 
+		else
 			redirect to '/login'
-		end 
-	end 
+		end
+	end
 
-	 get '/create_post' do 
+	 get '/create_post' do
     erb :'posts/create_post'
-  end 
+  end
 
-  get "/posts/create_post" do 
+  get "/posts/create_post" do
     erb :'posts/create_post'
-  end 
+  end
 
 
-	post '/posts' do 
-		if params[:content].empty? 
+	post '/posts' do
+		if params[:content].empty?
 			redirect '/posts/create_post'
-		else 
+		else
 			@user = User.find(session[:user_id])
 			@post = Post.create(:content => params[:content], :state=> params[:state], :user_id => @user.id)
 			redirect '/users/homepage'
-		end 
-	end 
-end 
+		end
+	end
+
+	patch '/posts/edit' do 
+	end
+end
