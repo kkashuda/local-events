@@ -1,4 +1,6 @@
+require 'rack-flash'
 class UsersController < ApplicationController
+  use Rack::Flash
   get '/signup' do
     if !logged_in?
       erb :'users/create_users'
@@ -14,7 +16,7 @@ class UsersController < ApplicationController
       @user = User.create(params)
       @user.save
       session[:user_id] = @user.id
-      flash[:message] = "Welcome, #{@user.username}!"
+      flash[:message] = "Welcome! Thanks for signing up."
       redirect to '/'
     end
   end
