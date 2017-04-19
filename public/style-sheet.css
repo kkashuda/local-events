@@ -38,10 +38,18 @@ img {
 }
 
 #posts {
-  background-color: white;
-  width: 400px;
   padding-top: 10px;
   padding-bottom: 10px;
   border: dashed black;
   border-width: thin;
+  background-color: white;
+  width: 400px;
+  font-weight: lighter;
+  font-family: "Courier New", Courier, monospace
+}
+
+#edit {
+  padding-bottom: 20px;
+  padding-top: 10px;
+  font-family: "Courier New", Courier, monospace
 }
