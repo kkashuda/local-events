@@ -18,14 +18,14 @@ class UsersController < ApplicationController
     else
       @user = User.create(params)
       @user.save
-      session[:user_id] = @user.id
+      current_user = @user.id
       flash[:message] = "Welcome! Thanks for signing up."
       redirect to '/'
     end
   end
 
   get '/login' do
-     if !session[:user_id]
+     if !current_user
       erb :'/users/login'
     else
       #binding.pry
