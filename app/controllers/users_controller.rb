@@ -12,15 +12,21 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
+    @user = User.create(params)
+
     if params[:username].empty? || params[:email].empty? || params[:password].empty?
-      flash[:message] = "Oops, please fill out all fields!"
+      flash[:message] = @user.errors.full_messages.join(", ")
       redirect to '/signup'
-    else
-      @user = User.create(params)
-      @user.save
-      current_user = @user.id
-      flash[:message] = "Welcome! Thanks for signing up."
-      redirect to '/'
+    else 
+      if @user.save
+        @user.save
+        current_user = @user.id
+        flash[:message] = "Welcome! Thanks for signing up."
+        redirect to '/'
+      else 
+        flash[:message] = @user.errors.full_messages.join(", ")
+        redirect to '/signup'
+      end
     end
   end
 
@@ -39,7 +45,7 @@ class UsersController < ApplicationController
     end
 
     if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
+      current_user = user.id
       redirect '/homepage'
     else
       redirect '/signup'
