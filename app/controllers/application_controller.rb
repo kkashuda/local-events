@@ -18,7 +18,6 @@ class ApplicationController < Sinatra::Base
     erb :'users/homepage'
   end
 
-
   helpers do
     def logged_in?
       !!session[:user_id]
@@ -28,5 +27,4 @@ class ApplicationController < Sinatra::Base
       User.find(session[:user_id])
     end
   end
-  
 end

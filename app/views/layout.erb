@@ -22,8 +22,9 @@
     <% if !logged_in? %>
      <a href="/login">login</a> <span class="bar"> | </span> <a href="/signup">signup</a>
     <% else %>
-      <a href="/create_post">create post</a> <span class="bar"> | </span>
-      <a href="/edit_post">my posts</a> <span class="bar"> | </span>
+    
+      <a href="/posts/new">create post</a> <span class="bar"> | </span>
+      <a href="/users/:user_id/posts">my posts</a> <span class="bar"> | </span>
       <a href="/posts">all posts</a> <span class="bar"> | </span>
       <a href="/logout">logout</a>
     <% end %>
@@ -34,3 +35,10 @@
 
 </body>
 </html>
+
+<!--
+1. Update routes to be more Restful
+2. Use your current_user and logged_in? more in your controllers and views
+3. Use a type=“password” in your user form for the password attribute
+4. Make sure that usernames and email are unique in the database (use active record validations) and use the active record error methods. ＀
+-->
