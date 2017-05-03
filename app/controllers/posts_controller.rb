@@ -26,7 +26,7 @@ class PostsController < ApplicationController
 			flash[:message] = "Oops, you left the text box empty!"
 			redirect '/posts/create_post'
 		else
-			@user = User.find(session[:user_id])
+			@user = current_user
 			@post = Post.create(:content => params[:content], :state=> params[:state], :user_id => @user.id)
 			flash[:message] = "Your post has been successfully created!"
 			redirect '/users/homepage'
@@ -46,8 +46,8 @@ class PostsController < ApplicationController
 	end
 
 	get '/users/:user_id/posts' do 
-		 if session[:user_id]
-      @posts = User.find(session[:user_id]).posts
+		 if current_user 
+      @posts = current_user.posts
       erb :'posts/show'
     else
       redirect to '/login'
@@ -55,12 +55,10 @@ class PostsController < ApplicationController
 	end 
 
 	get '/posts/:id/edit' do
-		if session[:user_id]
+		if current_user 
 			@post = Post.find_by(id: params[:id])
 			erb :'posts/edit' if @post.user == current_user 
 		else 
-			binding.pry 
-
 			redirect to '/login'
 		end 
 		
