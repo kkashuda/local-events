@@ -4,8 +4,11 @@ class UsersController < ApplicationController
   use Rack::Flash
 
   get '/signup' do
-    erb :'users/create_users' if !logged_in?
-    redirect 'users/homepage'
+   if !logged_in?
+      erb :'users/new'
+    else
+      redirect 'users/homepage'
+    end 
   end
 
   post '/signup' do
@@ -22,8 +25,12 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
-    erb :'/users/login' if !session[:user_id]
-    erb :'/homepage'
+     if !session[:user_id]
+      erb :'/users/login'
+    else
+      #binding.pry
+      erb :'/users/show'
+    end
   end
 
   post '/login' do
@@ -40,9 +47,9 @@ class UsersController < ApplicationController
   end
 
   get '/homepage' do
-    if logged_in?
+    if logged_in? 
       @posts = Post.all
-      erb :'/users/homepage'
+      erb :'/users/show'
     else
       redirect '/login'
     end

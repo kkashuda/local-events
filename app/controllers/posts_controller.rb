@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 	get '/posts' do
 		if logged_in?
 			@posts = Post.all
-			erb :'users/homepage'
+			erb :'users/show'
 		else
 			redirect to '/login'
 		end
@@ -35,7 +35,7 @@ class PostsController < ApplicationController
 
 	get '/users/homepage' do
 		@posts = Post.all
-		erb :'/users/homepage'
+		erb :'/users/show'
 	end
 
 	get '/posts/:id' do
@@ -45,11 +45,25 @@ class PostsController < ApplicationController
 		redirect to '/'
 	end
 
+	get '/users/:user_id/posts' do 
+		 if session[:user_id]
+      @posts = User.find(session[:user_id]).posts
+      erb :'posts/show'
+    else
+      redirect to '/login'
+    end
+	end 
+
 	get '/posts/:id/edit' do
-		redirect to '/login' if !logged_in?
-		@post = Post.find_by(id: params[:id])
-		erb :'posts/edit' if @post.user == current_user 
-		redirect to '/login'
+		if session[:user_id]
+			@post = Post.find_by(id: params[:id])
+			erb :'posts/edit' if @post.user == current_user 
+		else 
+			binding.pry 
+
+			redirect to '/login'
+		end 
+		
 	end
 
 	patch '/posts/:id' do
@@ -62,7 +76,7 @@ class PostsController < ApplicationController
 			if @post.user == current_user
 				@post.update(content: params[:content])
 				flash[:message] = "Your post has been updated!"
-				redirect to "/posts/#{@post.id}"
+				redirect to "/posts"
 			end
 		end
 	end

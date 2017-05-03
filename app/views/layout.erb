@@ -24,7 +24,7 @@
     <% else %>
     
       <a href="/posts/new">create post</a> <span class="bar"> | </span>
-      <a href="/users/:user_id/posts">my posts</a> <span class="bar"> | </span>
+      <a href="/users/<%=current_user.id%>/posts">my posts</a> <span class="bar"> | </span>
       <a href="/posts">all posts</a> <span class="bar"> | </span>
       <a href="/logout">logout</a>
     <% end %>
