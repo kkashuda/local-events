@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     else 
       if @user.save
         @user.save
-        current_user = @user.id
+        session[:user_id] = @user.id
         flash[:message] = "Welcome! Thanks for signing up."
         redirect to '/'
       else 

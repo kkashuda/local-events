@@ -5,30 +5,25 @@ class PostsController < ApplicationController
 	use Rack::Flash
 
 	get '/posts' do
-		if logged_in?
-			@posts = Post.all
-			erb :'users/show'
-		else
-			redirect to '/login'
-		end
+		redirect to '/login' if !logged_in?
+		@posts = Post.all
+		erb :'users/show'
 	end
 
 	get '/posts/new' do
-		if logged_in?
-    	erb :'posts/new'
-		else
-			redirect '/login'
-		end
+		redirect to '/login' if !logged_in?
+    erb :'posts/new'
   end
 
 	post '/posts' do
+		@user = current_user
+		@post = Post.create(:content => params[:content], :state=> params[:state], :user_id => @user.id)
+
 		if params[:content].empty?
-			flash[:message] = "Oops, you left the text box empty!"
-			redirect '/posts/create_post'
-		else
-			@user = current_user
-			@post = Post.create(:content => params[:content], :state=> params[:state], :user_id => @user.id)
-			flash[:message] = "Your post has been successfully created!"
+			flash[:message] = @post.errors.full_messages.join(", ")
+			redirect '/posts/new'
+		elsif @post.save
+			flash[:message] = "Your post has been successfully created"
 			redirect '/users/homepage'
 		end
 	end
@@ -73,7 +68,7 @@ class PostsController < ApplicationController
 			@post = Post.find_by_id(params[:id])
 			if @post.user == current_user
 				@post.update(content: params[:content])
-				flash[:message] = "Your post has been updated!"
+				flash[:message] = "Your post has been successfully updated"
 				redirect to "/posts"
 			end
 		end
@@ -94,7 +89,7 @@ class PostsController < ApplicationController
 		@post = Post.find_by(id: params[:id])
 		if @post.user == current_user
 			@post.delete
-			flash[:message] = "Your post has been deleted!"
+			flash[:message] = "Your post has been successfully deleted"
 			redirect '/posts'
 		else
 			flash[:message] = "Please don't ruin other peoples stuff"
