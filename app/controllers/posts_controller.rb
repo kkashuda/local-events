@@ -1,5 +1,5 @@
 require 'rack-flash'
-
+require 'pry'
 class PostsController < ApplicationController
 	use Rack::Flash
 
@@ -49,11 +49,11 @@ class PostsController < ApplicationController
 	end 
 
 	get '/posts/:id/edit' do
-		if current_user 
-			@post = Post.find_by(id: params[:id])
-			erb :'posts/edit' if @post.user == current_user 
+		@post = Post.find_by(id: params[:id])
+		if @post.user == current_user 
+			erb :'posts/edit'  
 		else 
-			redirect to '/login'
+			redirect to '/users/homepage'
 		end 
 		
 	end
@@ -61,7 +61,7 @@ class PostsController < ApplicationController
 	patch '/posts/:id' do
 		redirect to '/login' if !logged_in?
 		if params[:content].empty?
-			flash[:message] = "Oops, you left the text box empty!"
+			flash[:message] = "You must enter post content"
 			redirect to "/posts/#{params[:id]}/edit"
 		else
 			@post = Post.find_by(id: params[:id])
@@ -79,7 +79,7 @@ class PostsController < ApplicationController
 		if @post.user == current_user 
 			erb :'posts/delete'
 		else 
-			redirect to '/'
+			redirect to '/homepage'
 		end 
 	end
 
