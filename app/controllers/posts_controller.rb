@@ -1,4 +1,3 @@
-require 'pry'
 require 'rack-flash'
 
 class PostsController < ApplicationController
@@ -65,7 +64,7 @@ class PostsController < ApplicationController
 			flash[:message] = "Oops, you left the text box empty!"
 			redirect to "/posts/#{params[:id]}/edit"
 		else
-			@post = Post.find_by_id(params[:id])
+			@post = Post.find_by(id: params[:id])
 			if @post.user == current_user
 				@post.update(content: params[:content])
 				flash[:message] = "Your post has been successfully updated"
@@ -76,7 +75,7 @@ class PostsController < ApplicationController
 
 	get '/posts/:id/delete' do
 		redirect to '/login' if !logged_in?
-		@post = Post.find_by_id(params[:id])
+		@post = Post.find_by(id: params[:id])
 		if @post.user == current_user 
 			erb :'posts/delete'
 		else 

@@ -19,7 +19,7 @@ class UsersController < ApplicationController
       redirect to '/signup'
     else 
       if @user.save
-        @user.save
+        @user.save 
         session[:user_id] = @user.id
         flash[:message] = "Welcome! Thanks for signing up."
         redirect to '/'
@@ -31,34 +31,38 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
-     if !current_user
+    if !logged_in?
       erb :'/users/login'
     else
-      #binding.pry
-      erb :'/users/show'
+      erb :'/users/homepage'
     end
   end
 
   post '/login' do
+    user = User.create(params)
     if !params[:username].empty? && !params[:password].empty?
       user = User.find_by(username: params[:username])
+    elsif params[:username].empty? 
+      flash[:message] = user.errors.full_messages_for(:username).join
+      redirect '/login'
+    elsif params[:password].empty? 
+      flash[:message] = "Password not valid"
+      redirect '/login'
     end
 
     if user && user.authenticate(params[:password])
-      current_user = user.id
+      session[:user_id] = user.id 
       redirect '/homepage'
     else
-      redirect '/signup'
+      flash[:message] = "Password not valid"
+      redirect '/login'
     end
   end
 
   get '/homepage' do
-    if logged_in? 
-      @posts = Post.all
-      erb :'/users/show'
-    else
-      redirect '/login'
-    end
+    redirect '/login' if !logged_in? 
+    @posts = Post.all
+    erb :'/users/show'
   end
 
   get '/logout' do
